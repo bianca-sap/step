@@ -13,11 +13,6 @@
   float: left;
 }
 
-#bottom {
-  margin: 0;
-  text-align: center;
-}
-
 #navbar {
   list-style-type: none;
   margin: 0;
@@ -40,11 +35,18 @@
   color: #bfbfbf;
 }
 
-#bottom a:link, a:visited{
+.bottom {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  text-align: center;
+}
+
+.bottom a:link, a:visited{
   color: #595959;
 }
 
-#bottom a:hover, a:active{
+.bottom a:hover, a:active{
   color: #bfbfbf;
 }
 
@@ -70,3 +72,38 @@
   padding: 5px;
 }
 
+.p1 {
+  float: left;
+  width: 50%;
+  text-align: center;
+}  
+
+.p2 {
+  float:right; 
+  width: 50%;
+  text-align: center;
+}
+
+.project:hover .image {
+  opacity: 0.2;
+}
+
+.overlay {
+  opacity: 0;
+  width: 200px;
+  transform: translate(30%, -200%);
+}
+
+.project:hover .overlay {
+  opacity: 1;
+}
+
+.button {
+  text-decoration: none;
+  display: inline-block;
+  background-color: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 5px;
+  
+}
