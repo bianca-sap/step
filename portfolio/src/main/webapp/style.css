@@ -7,3 +7,29 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#home {
+    float: left;
+}
+
+#nav {
+  float: right;
+}
+
+#nav a {
+  padding: 8px;
+}
+
+.active {
+  color: #4F0;
+}
+
+#nav a:hover {
+  color: #901;
+}
