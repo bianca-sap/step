@@ -42,6 +42,10 @@
   text-align: center;
 }
 
+.bottom a{
+  margin: 25px;
+}
+
 .bottom a:link, a:visited{
   color: #595959;
 }
@@ -68,7 +72,7 @@
   display: inline-block;
   background-color: #f2f2f2;
   border: 1px solid #d9d9d9;
-  border-radius: 7px;
+  border-radius: 5px;
   padding: 5px;
 }
 
