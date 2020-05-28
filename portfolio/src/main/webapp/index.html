@@ -2,36 +2,122 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Bianca Saputra</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
 
   <body>
     <div id="content">
-      <ul id = "navbar">
-        <li id = "nav"><a href="mailto:bsaputra132@gmail.com" style="text-decoration: none;">contact</a></li>
-        <li id = "nav"><a href="work.html" style="text-decoration: none;">work</a></li>
-        <li id = "nav"><a href="/documents/resume.pdf" style="text-decoration: none;">resume</a></li>
-        <li id = "nav"><a href="about.html" style="text-decoration: none;">about</a></li>
-      </ul> 
+      <div id = "main">
+        <div id = "text">
+          <h1><b>Hi, I'm Bianca.</b></h1>
+          <br> <br>
+          <p>CS @ Duke University, <br> currently based in Chicago, IL</p>
+          <br> <br>
+          <p>download my resume <a href="/documents/resume.pdf"><b>here</b></a></p>
+          <br>
+          <br>
+          <button style="display:block;margin:auto;" onclick="getData()">Fetch /data</button>
+          <h1 id = "fetch"></h1>
+       
+        </div>
+      </div>
+    
+      <div id = "about">
+        <div class = "row">
+          <div class = "sectionName">
+            <h3>A little <br> about me.</h3>
+          </div>
+
+          <div class = "section">
+            <p>I'm a current student at Duke University majoring in computer science with minors in computational biology and religion. 
+            I'm passionate about computer science education and applying technology to find novel solutions in healthcare.</p>
+            <p>Aside from tech, I also enjoy running, grapefruit La Croix, and spending time with friends and family.</p>
+          </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class = "row">
+          <div class = "sectionName">
+            <h3>Skills</h3>
+          </div>
+
+          <div class = "skill">
+            <h3>Languages</h3>
+            <li>Python</li>
+            <li>Java</li>
+            <li>C</li>
+            <li>Javascript</li>
+            <li>HTML/CSS</li>
+          </div>
+
+          <div class = "skill">
+            <h3>Tools</h3>
+            <li>Stata</li>
+            <li>Mathematica</li>
+            <li>Qualtrics</li>
+            <li>Git</li>
+            <li>Github</li>
+          </div>
+        </div>
+      </div> 
 
       <br>
       <br>
-       
-      <h1>Hi, <br> I'm Bianca.</h1>
-      <p>CS @ Duke University.</p>
-      <button style="display:block;margin:auto;" onclick="getData()">Fetch /data</button>
-      <h1 id = "fetch"></h1>
+      <br>
+      <br>
+
+      <div id = "work">
+        <div class = "row">
+          <div class = "sectionName">
+            <h3>Projects</h3>
+          </div>
+
+          <div class = "p1">
+            <br>
+            <div class = "project">
+              <img class = "image" src="images/cells.jpg" alt="thyroid cells" width="250" height="250">
+              <div class="overlay">
+                <div class="text">Improving Thyroid Malignancy Identification</div>
+                <br>
+                <a href="http://aiforeveryone.net/ds_projects/project_7/"><b>view</b></a>
+              </div>
+            </div>
+          </div>
+
+          <div class = "p2">
+            <br>
+            <div class = "project">
+              <img class = "image" src="images/stroke.jpg" alt="stroke brain" width="250" height="250">
+              <div class="overlay">
+                <div class="text"> Deep Learning for Facial Paralysis Detection</div>
+                <br>
+                <a href="/documents/bells.pdf"><b>view</b></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <br>
     <br>
     <br>
 
-    <div class = "bottom">
+    <div class = "footer">
       <a href="https://www.linkedin.com/in/bianca-saputra" style="text-decoration: none;">linkedin</a>
       <a href="https://github.com/biancasap" style="text-decoration: none;">github</a>
-    </div> 
+      <a href="mailto:bsaputra132@gmail.com" style="text-decoration: none;">email</a>
+
+    </div>
+
+    <br>
+    <br>
+    <br> 
   </body>
 </html>
