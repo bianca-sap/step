@@ -15,8 +15,11 @@
 
 function getData() {
   document.getElementById('fetch').innerHTML = "";
+  var num = document.getElementById("num");
+  num = num.options[num.selectedIndex].value;
+  var url = "/data?limit=" + num;
 
-  fetch('/data').then(response => response.json()).then((messages) => {
+  fetch(url).then(response => response.json()).then((messages) => {
     const taskListElement = document.getElementById('fetch');
     messages.forEach((task) => {
       taskListElement.appendChild(createListElement(task));
@@ -29,3 +32,20 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+/** Tells the server to delete the task. */
+function deleteData() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request);
+
+  getData();
+}
+
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });
+}
+

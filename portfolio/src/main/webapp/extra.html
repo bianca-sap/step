@@ -5,6 +5,35 @@
     <title>STEP extras</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Animal');
+            data.addColumn('number', 'Count');
+            data.addRows([
+                ['Lions', 10],
+                ['Tigers', 5],
+                ['Bears', 15]
+            ]);
+
+            // Set chart options
+            const options = {
+                'title': 'Zoo Animals',
+                'width': 500,
+                'height': 400
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            const chart = new google.visualization.PieChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+    </script>
+
   </head>
 
   <body>
@@ -22,12 +51,37 @@
             <input type="submit"/>
           </form>
 
-          <br> <br>
+          <br>
+          <br>
 
-          <button style="display:block;margin:auto;" onclick="getData()">see comments</button>
+          <label for="options">Choose number of comments to view:</label>
+          <select id="num">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br><br>
+          <input type="submit" onclick="getData()" value="view comments">
           <br>
           <ul id = "fetch"></ul>
+          <br>
+          <button style="display:block;margin:auto;" onclick="deleteData()">delete all comments</button>
 
+          <br>
+          <br>
+
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PvL4ch6Q3X_hkSx_bOxlgab-Z_Dv4zQ&callback=initMap"
+    async defer></script>
+          <div id="map"></div>
+
+          <br>
+          <br>
+
+          <div id="chart"></div>
+          <p>test</p>
+          
           </div>
       </div>
     </div>

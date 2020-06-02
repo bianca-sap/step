@@ -28,20 +28,27 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns comments.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Task");
+    Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<String> messages = new ArrayList<String>();
+    int limit = Integer.parseInt(request.getParameter("limit"));
+    int iter = 0;
     for (Entity entity : results.asIterable()) {
       String message = (String) entity.getProperty("comment");
       messages.add(message);
+
+      iter +=1;
+      if (iter == limit){
+          break;
+      }
     }
 
     Gson gson = new Gson();
@@ -54,9 +61,11 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String message = request.getParameter("input");
+    long timestamp = System.currentTimeMillis();
 
     Entity taskEntity = new Entity("Task");
     taskEntity.setProperty("comment", message);
+    taskEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
@@ -75,3 +84,4 @@ public class DataServlet extends HttpServlet {
     return json;
   }
 }
+
