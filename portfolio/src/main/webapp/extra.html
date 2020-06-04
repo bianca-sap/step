@@ -36,7 +36,7 @@
 
   </head>
 
-  <body>
+  <body onload="fetchBlobstoreUrlAndShowForm()">
     <div id="content">
       <div id = "main">
           <div id = "text">
@@ -49,6 +49,13 @@
             <textarea name="input"> </textarea>
             <br/><br/>
             <input type="submit"/>
+          </form>
+
+          <form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
+            <p>Upload an image:</p>
+            <input type="file" name="image">
+            <br/><br/>
+            <button>Submit</button>
           </form>
 
           <br>
@@ -72,18 +79,18 @@
           <br>
           <br>
 
+          <div id="chart"></div>
+          
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PvL4ch6Q3X_hkSx_bOxlgab-Z_Dv4zQ&callback=initMap"
     async defer></script>
-          <div id="map"></div>
-
-          <br>
-          <br>
-
-          <div id="chart"></div>
-          <p>test</p>
-          
+      <div id="map"></div>
           </div>
       </div>
+    </div>
+
+    <div class = "footer">
+      <a href="/index.html" style="text-decoration: none;">home</a>
+      <a href="/extra" style="text-decoration: none;">log out</a>
     </div>
   </body>
 </html>
