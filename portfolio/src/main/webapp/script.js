@@ -12,23 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
 
 function getData() {
-  fetch('/data').then(response => response.text()).then((disp) => {
-    document.getElementById('fetch').innerText = disp;
+  document.getElementById('fetch').innerHTML = "";
+  var num = document.getElementById("num");
+  num = num.options[num.selectedIndex].value;
+  var url = "/data?limit=" + num;
+
+  fetch(url).then(response => response.json()).then((messages) => {
+    const taskListElement = document.getElementById('fetch');
+    messages.forEach((task) => {
+      taskListElement.appendChild(createListElement(task));
+    })
   });
 }
+
+function createListElement(text) {
+  const liElement = document.createElement('h1');
+  liElement.innerText = text;
+  return liElement;
+}
+
+/** Tells the server to delete the task. */
+function deleteData() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request);
+
+  getData();
+}
+
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });
+}
+
