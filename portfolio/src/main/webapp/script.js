@@ -41,6 +41,12 @@ function deleteData() {
   getData();
 }
 
+function logout(){
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request);
+
+}
+
 var map;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -49,3 +55,14 @@ function initMap() {
     });
 }
 
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('my-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
+}
