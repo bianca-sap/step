@@ -55,14 +55,16 @@ function initMap() {
     });
 }
 
-function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
-      .then((response) => {
-        return response.text();
-      })
-      .then((imageUploadUrl) => {
-        const messageForm = document.getElementById('my-form');
-        messageForm.action = imageUploadUrl;
-        messageForm.classList.remove('hidden');
+function getAPOD(){
+  fetch("https://api.nasa.gov/planetary/apod?api_key=dRdayxQfJoADFDMxOErRG7BPelb1M9X6obqWG7Z4", {method: 'GET'})
+  .then(
+    function(response) {
+      response.json().then(function(data) {
+        console.log(data.url);
+        document.getElementById('APOD').src= data.url;
       });
+    }
+  );
 }
+
+

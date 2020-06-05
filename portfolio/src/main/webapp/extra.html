@@ -36,7 +36,7 @@
 
   </head>
 
-  <body onload="fetchBlobstoreUrlAndShowForm()">
+  <body onload = "getAPOD()">
     <div id="content">
       <div id = "main">
           <div id = "text">
@@ -51,13 +51,6 @@
             <input type="submit"/>
           </form>
 
-          <form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
-            <p>Upload an image:</p>
-            <input type="file" name="image">
-            <br/><br/>
-            <button>Submit</button>
-          </form>
-
           <br>
           <br>
 
@@ -69,7 +62,10 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <br><br>
+
+          <br>
+          <br>
+          
           <input type="submit" onclick="getData()" value="view comments">
           <br>
           <ul id = "fetch"></ul>
@@ -79,11 +75,20 @@
           <br>
           <br>
 
+          <h1> Here's NASA's APOD! </h1>
+          <img src="" id = "APOD" alt="NASA APOD" />
+
+          <br>
+          <br>
+
           <div id="chart"></div>
           
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PvL4ch6Q3X_hkSx_bOxlgab-Z_Dv4zQ&callback=initMap"
-    async defer></script>
-      <div id="map"></div>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PvL4ch6Q3X_hkSx_bOxlgab-Z_Dv4zQ&callback=initMap" async defer></script>
+          <div id="map"></div>
+
+          <br>
+          <br>
+
           </div>
       </div>
     </div>
