@@ -83,18 +83,28 @@ public final class FindMeetingQuery {
 
     //finds all available (free) times between blocked time that are of requested duration or longer
     TimeRange[] findFree = ((List<TimeRange>) tmp).toArray(new TimeRange[tmp.size()]); 
-    if (TimeRange.fromStartEnd(0, findFree[0].start(), true).duration()>=reqDuration){
-      ret.add(TimeRange.fromStartEnd(0, findFree[0].start() - 1, true));
-    }
 
-    for (int i=0; i < findFree.length-1; i++){
-      if (TimeRange.fromStartEnd(findFree[i].end(), findFree[i+1].start(), true).duration() >= reqDuration){
-        ret.add(TimeRange.fromStartEnd(findFree[i].end(), findFree[i+1].start() - 1, true));
+    int start;
+    int end;
+    for (int i = -1; i < findFree.length; i++){
+      if (i == -1){
+        start = 0;
+        end = findFree[0].start();  
+      } 
+
+      else if (i == findFree.length - 1){
+        start = findFree[i].end();
+        end = 24*60;
       }
-    }
 
-    if (TimeRange.fromStartEnd(findFree[findFree.length - 1].end(), 24*60, true).duration() >= reqDuration){
-      ret.add(TimeRange.fromStartEnd(findFree[findFree.length - 1].end(), (24*60) - 1, true));
+      else {
+        start = findFree[i].end();
+        end = findFree[i+1].start();
+      }
+
+      if (TimeRange.fromStartEnd(start, end, true).duration() >= reqDuration){
+        ret.add(TimeRange.fromStartEnd(start, end - 1, true));
+      }
     }
     
     return ret;
