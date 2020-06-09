@@ -40,10 +40,4 @@ public final class GreeterTest {
   // Whitespace should be trimmed
   Assert.assertEquals("Hello Ada", greeting);
   }
-
-  
-
-
-  
-
 }
