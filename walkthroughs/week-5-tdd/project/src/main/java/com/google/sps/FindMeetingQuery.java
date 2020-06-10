@@ -23,46 +23,75 @@ public final class FindMeetingQuery {
    * Returns the times when the meeting could happen on a certain day given meeting request.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<TimeRange> ret = new ArrayList<TimeRange>();
+    List<TimeRange> required = new ArrayList<TimeRange>();
 
-    
     Set<String> attendees =  new HashSet<String>();
     attendees.addAll(request.getAttendees()); 
+    Set<String> optionalAttendees = new HashSet<String>();
+    optionalAttendees.addAll(request.getOptionalAttendees());
     int reqDuration = (int) request.getDuration();
 
     //if requested duration is longer than 24hrs, there is no time slot to accommodate that
     if (reqDuration > 24*60){
-      return ret;
+      return new ArrayList<TimeRange>();
     }
 
     //if there are no scheduled events, the entire day is free
     if (events.isEmpty()){
-      ret.add(TimeRange.WHOLE_DAY);
-      return ret;
+      return new ArrayList<TimeRange>(Arrays.asList(TimeRange.WHOLE_DAY));
     }
 
     //accumulates an arraylist of all times that it is not possible to meet (blocked time)
     //a time is blocked if there are attendees in the meeting request and in the event
     List<TimeRange> notPossible= new ArrayList<TimeRange>();
+    List<TimeRange> notPossibleOptional= new ArrayList<TimeRange>();
     for (Event event : events){
       Set<String> eventAttendees = event.getAttendees();
       Set<String> overlap = new HashSet<>(eventAttendees);
+      Set<String> overlapOptional = new HashSet<>(eventAttendees);
+
       overlap.retainAll(attendees);
+      overlapOptional.retainAll(optionalAttendees);
 
       if (!overlap.isEmpty()){
         notPossible.add(event.getWhen());
       }
+
+      if (!overlapOptional.isEmpty()){
+        notPossibleOptional.add(event.getWhen());
+      }
     }
 
     //if there are no blocked times, the entire day is free
-    if (notPossible.isEmpty()){
-      ret.add(TimeRange.WHOLE_DAY);
-      return ret;
+    if (notPossible.isEmpty() && notPossibleOptional.isEmpty()){
+      return new ArrayList<TimeRange>(Arrays.asList(TimeRange.WHOLE_DAY));
+      
     }
 
-    //combines overlapping blocked times into a consolidated arraylist
-    Collections.sort(notPossible, TimeRange.ORDER_BY_START);
-    TimeRange[] blockedTimes = ((List<TimeRange>) notPossible).toArray(new TimeRange[notPossible.size()]); 
+    if (notPossible.isEmpty() && !notPossibleOptional.isEmpty()){
+      return findFreeTimes(consolidate(notPossibleOptional), reqDuration);
+    }
+
+    if (!notPossible.isEmpty() && notPossibleOptional.isEmpty()){
+      return findFreeTimes(consolidate(notPossible), reqDuration);
+    }
+
+    List<TimeRange> findTimes = new ArrayList<TimeRange>();
+    findTimes.addAll(notPossibleOptional);
+    findTimes.addAll(notPossible);
+    List<TimeRange> bothFree = findFreeTimes(consolidate(findTimes), reqDuration);
+
+    if (bothFree.isEmpty()){
+        return findFreeTimes(consolidate(notPossible), reqDuration);
+    }
+
+    return bothFree;
+  }   
+
+  //combines overlapping required blocked times into a consolidated arraylist
+  private List<TimeRange> consolidate(List<TimeRange> times){
+    Collections.sort(times, TimeRange.ORDER_BY_START);
+    TimeRange[] blockedTimes = ((List<TimeRange>) times).toArray(new TimeRange[times.size()]); 
     List<TimeRange> tmp = new ArrayList<TimeRange>();
     tmp.add(blockedTimes[0]);
     int tmpIdx = 0;
@@ -81,8 +110,13 @@ public final class FindMeetingQuery {
       }
     }
 
-    //finds all available (free) times between blocked time that are of requested duration or longer
-    TimeRange[] findFree = ((List<TimeRange>) tmp).toArray(new TimeRange[tmp.size()]); 
+      return tmp;
+  }
+
+  //finds all available (free) times between blocked time that are of requested duration or longer
+  private List<TimeRange> findFreeTimes(List<TimeRange> times, int reqDuration){
+    TimeRange[] findFree = ((List<TimeRange>) times).toArray(new TimeRange[times.size()]); 
+    List<TimeRange> tmp = new ArrayList<TimeRange>();
 
     int start;
     int end;
@@ -103,10 +137,9 @@ public final class FindMeetingQuery {
       }
 
       if (TimeRange.fromStartEnd(start, end, true).duration() >= reqDuration){
-        ret.add(TimeRange.fromStartEnd(start, end - 1, true));
+        tmp.add(TimeRange.fromStartEnd(start, end - 1, true));
       }
     }
-    
-    return ret;
-  }   
+    return tmp;
+  }
 }
