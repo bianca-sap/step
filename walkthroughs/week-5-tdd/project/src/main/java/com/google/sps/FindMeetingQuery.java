@@ -23,8 +23,6 @@ public final class FindMeetingQuery {
    * Returns the times when the meeting could happen on a certain day given meeting request.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<TimeRange> required = new ArrayList<TimeRange>();
-
     Set<String> attendees =  new HashSet<String>();
     attendees.addAll(request.getAttendees()); 
     Set<String> optionalAttendees = new HashSet<String>();
